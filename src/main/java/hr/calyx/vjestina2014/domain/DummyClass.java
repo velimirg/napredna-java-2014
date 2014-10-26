@@ -1,6 +1,13 @@
 package hr.calyx.vjestina2014.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
 public class DummyClass {
+
+    @Id
     private Long id;
     private String name;
     private int age;

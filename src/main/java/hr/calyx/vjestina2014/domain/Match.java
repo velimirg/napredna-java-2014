@@ -1,12 +1,52 @@
 package hr.calyx.vjestina2014.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.annotation.Generated;
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Match {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "round_id", nullable = false)
+    private Round round;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "match")
     private List<Game> games;
+
+    @ManyToOne
+    @JoinColumn(name = "player_1_id")
     private Player player1;
+
+    @ManyToOne
+    @JoinColumn(name = "player_2_id")
     private Player player2;
+
+    @ManyToOne
+    @JoinColumn(name = "winner_id")
     private Player winner;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Round getRound() {
+        return round;
+    }
+
+    public void setRound(Round round) {
+        this.round = round;
+    }
 
     public List<Game> getGames() {
         return games;

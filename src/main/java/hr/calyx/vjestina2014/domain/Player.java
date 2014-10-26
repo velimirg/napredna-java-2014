@@ -1,10 +1,28 @@
 package hr.calyx.vjestina2014.domain;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
 public class Player {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @OneToMany(mappedBy = "winner")
+    List<Match> wonMatches;
+
     private String name;
+
     private String nickname;
+
+    @Enumerated(EnumType.STRING)
     private Race race;
+
+    public Player() {
+    }
 
     public Player(Long id, String name, String nickname, Race r) {
         this.id = id;
@@ -19,6 +37,14 @@ public class Player {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Match> getWonMatches() {
+        return wonMatches;
+    }
+
+    public void setWonMatches(List<Match> wonMatches) {
+        this.wonMatches = wonMatches;
     }
 
     public String getName() {
