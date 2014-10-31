@@ -25,16 +25,13 @@ public class GameController {
     @Autowired
     GameService gameService;
 
-    @Autowired
-    GameRepository gameRepository;
-
     @RequestMapping(value = "/tournaments/{tournamentId}/rounds/{roundId}/matches/{matchId}/games", method = RequestMethod.GET)
     public ResponseEntity listGames(@PathVariable Long matchId) {
         return new ResponseEntity(gameService.listByMatch(matchId), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/tournaments/{tournamentId}/rounds/{roundId}/matches/{matchId}/games", method = RequestMethod.POST)
-    public ResponseEntity postMatch(@PathVariable Long matchId, @RequestBody Game game) {
+    public ResponseEntity postGame(@PathVariable Long matchId, @RequestBody Game game) {
         return new ResponseEntity(gameService.create(matchId, game), HttpStatus.CREATED);
     }
 
