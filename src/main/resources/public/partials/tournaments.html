@@ -1,0 +1,16 @@
+<input type="text" ng-model="tournament.name" placeholder="Input text">
+
+
+
+<button ng-click="submitTournament(tournament)">Submit</button>
+
+<br/>
+<br/>
+
+<button ng-click="getTournaments()">Refresh</button>
+
+<input type="text" ng-model="query">
+
+<div ng-repeat="tournament in tournaments | filter: query ">
+    <a ng-href="#/tournaments/{{tournament.id}}"> {{tournament.name}}</a>
+</div>
