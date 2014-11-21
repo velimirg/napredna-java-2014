@@ -1,0 +1,17 @@
+<div>
+    <h3>Tournaments</h3>
+    <table border="1">
+        <tr>
+            <th>Tournament</th>
+            <th>Actions</th>
+        </tr>
+        <tr ng-repeat="tournament in tournaments">
+            <td>{{tournament.name}}</td>
+            <td><a href="#/tournaments/{{tournament.id}}">Edit</a> <a href ng-click="deleteTournament(tournament)">Delete</a>
+            </td>
+        </tr>
+    </table>
+
+    <a href="#/tournaments-add-tournament">Add new tournament</a>
+
+</div>

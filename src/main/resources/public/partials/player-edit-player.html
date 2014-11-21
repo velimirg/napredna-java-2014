@@ -1,0 +1,15 @@
+<div>
+
+    <form>
+        <input type="text" ng-model="player.name" placeholder="Input name">
+        <br/>
+        <input type="text" ng-model="player.nickname" placeholder="Input nickname">
+        <br/>
+        <select ng-model="player.race" ng-options="race for race in races">
+        </select>
+        <hr/>
+        <input type="date" ng-model="date">
+
+        <button ng-click="editPlayer(player)">Save</button>
+    </form>
+</div>

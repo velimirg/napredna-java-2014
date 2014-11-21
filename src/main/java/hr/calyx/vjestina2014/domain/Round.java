@@ -1,7 +1,5 @@
 package hr.calyx.vjestina2014.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,6 +13,8 @@ public class Round {
     @ManyToOne
     @JoinColumn(name = "tournament_id")
     private Tournament tournament;
+
+    private String description;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "round")
     private List<Match> matches;
@@ -42,5 +42,13 @@ public class Round {
 
     public void setMatches(List<Match> matches) {
         this.matches = matches;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

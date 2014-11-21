@@ -1,0 +1,20 @@
+<div>
+
+    <form>
+
+        <input type="text" ng-model="tournament.name" placeholder="Enter tournament name">
+        <button ng-click="editTournament(tournament)">Save</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        <tr ng-repeat="round in rounds">
+            <td>{{round.description}}</td>
+            <td></td>
+        </tr>
+    </table>
+
+</div>

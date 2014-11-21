@@ -5,8 +5,8 @@ INSERT INTO player(id, name, nickname, race) VALUES(2, 'name_2', 'nick_2', 'Prot
 INSERT INTO player(id, name, nickname, race) VALUES(3, 'name_3', 'nick_3', 'Random');
 INSERT INTO player(id, name, nickname, race) VALUES(4, 'name_4', 'nick_4', 'Terran');
 
-INSERT INTO round(id, tournament_id) VALUES(1, 1);
-INSERT INTO round(id, tournament_id) VALUES(2, 1);
+INSERT INTO round (id, description, tournament_id) VALUES (1, 'Finals', 1);
+INSERT INTO round (id, description, tournament_id) VALUES (2, 'Semifinals', 1);
 
 INSERT INTO match(id, round_id, player_1_id, player_2_id) VALUES (1, 1, 1, 2);
 INSERT INTO match(id, round_id, player_1_id, player_2_id) VALUES (2, 1, 3, 4);
