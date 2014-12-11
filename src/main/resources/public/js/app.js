@@ -4,8 +4,27 @@ angular.module('tournamentServices', []);
 
 var tournamentApp = angular.module('tournamentApp', ['ngRoute',
     'tournamentControllers',
-    'tournamentServices']);
+    'tournamentServices',
+]);
 
+tournamentApp.run(function ($window, $http, $rootScope) {
+
+    $window.googleSignInCallback = function (authResult) {
+
+        $http.post('oauth2/google', null, {
+            headers: {
+                id_token: authResult.id_token,
+                authorization_code: authResult.code
+            }
+        })
+            .success(function (data) {
+                $http.defaults.headers.common['token'] = data;
+                $rootScope.loggedIn = data;
+                console.log(data);
+            })
+        console.log(authResult);
+    }
+})
 tournamentApp.config(function($routeProvider) {
 
     $routeProvider
@@ -58,7 +77,7 @@ tournamentApp.config(function($routeProvider) {
         })
 
         .otherwise({
-            redirectTo: '/tournaments'
+            redirectTo: '/'
         })
 
 

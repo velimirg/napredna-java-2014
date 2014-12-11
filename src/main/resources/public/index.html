@@ -1,13 +1,24 @@
 <html ng-app="tournamentApp">
 
 <head>
-
-
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
+    </script>
 </head>
 
 <body>
 
+<div ng-show="!$root.loggedIn" id="signinButton">
+  <span class="g-signin"
+        data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
+        data-clientid="225925658800-aldm0vn094hmo30kh1cs2t475boaq7al.apps.googleusercontent.com"
+        data-cookiepolicy="single_host_origin"
+        data-redirecturi="postmessage" ,
+        data-callback="googleSignInCallback">
 
+  </span>
+</div>
+
+<a href="#/tournaments" ng-show="$root.loggedIn">Tournaments</a>
 <div ng-view>
 
 </div>

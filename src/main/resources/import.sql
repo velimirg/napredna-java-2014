@@ -1,3 +1,5 @@
+INSERT INTO approle (id, name, description) VALUES (1, 'USER', 'korisnik');
+
 INSERT INTO tournament(id, name) VALUES(1, 'tournament_2014');
 
 INSERT INTO player(id, name, nickname, race) VALUES(1, 'Choi Ji Sung', 'Bomber', 'Terran');
