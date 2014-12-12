@@ -29,5 +29,5 @@ dependencies {
     compile("org.springframework.social:spring-social-google:1.0.0.RELEASE");
     compile("org.apache.httpcomponents:httpclient:4.3.6")
     compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.2.RELEASE'
-    compile("org.postgresql:postgresql:9.3-1102-jdbc41")
+    compile("org.hsqldb:hsqldb:2.0.0")
 }
