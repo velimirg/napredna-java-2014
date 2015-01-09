@@ -1,5 +1,7 @@
 package hr.calyx.vjestina2014.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class Round {
 
     @ManyToOne
     @JoinColumn(name = "tournament_id")
+    @JsonIgnore
     private Tournament tournament;
 
     private String description;

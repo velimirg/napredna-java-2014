@@ -64,6 +64,24 @@ public class AuthController {
 
         String jwt = JwtHelper.encode(tokenContent, signer).getEncoded();
 
-        return new ResponseEntity(jwt, HttpStatus.OK);
+        return new ResponseEntity(new Token(jwt), HttpStatus.OK);
+    }
+
+    public static class Token {
+        public String token;
+
+        public Token() {}
+
+        public Token(String token) {
+            this.token = token;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
     }
 }

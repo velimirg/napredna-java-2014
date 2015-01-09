@@ -1,0 +1,11 @@
+
+.rounds-container {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space:nowrap;
+}
+
+.match-container {
+    display:inline-block;
+    vertical-align: middle;
+}

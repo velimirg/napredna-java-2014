@@ -10,13 +10,13 @@ var tournamentApp = angular.module('tournamentApp', ['ngRoute',
 tournamentApp.run(function ($window, $http, $rootScope) {
 
     $window.googleSignInCallback = function (authResult) {
-
         $http.post('oauth2/google', null, {
             headers: { authorization_code: authResult.code }
         })
         .success(function (data) {
-            $http.defaults.headers.common['token'] = data;
-            $rootScope.loggedIn = data;
+                console.log('Successful login');
+            $http.defaults.headers.common['token'] = data.token;
+            $rootScope.loggedIn = data.token;
         })
     }
 })
@@ -28,7 +28,7 @@ tournamentApp.config(function($routeProvider) {
             controller: 'TournamentListCtrl',
             resolve: {
                 tournaments: function (TournamentFactory) {
-                    return TournamentFactory.getTournaments();
+                    return TournamentFactory.getTournamentTemplates();
                 }
             }
         })
@@ -38,9 +38,6 @@ tournamentApp.config(function($routeProvider) {
             resolve: {
                 tournament: function ($http, $route) {
                     return $http.get('tournaments/' + $route.current.params.id);
-                },
-                rounds: function ($route, RoundFactory) {
-                    return RoundFactory.getRounds($route.current.params.id);
                 }
             }
         })

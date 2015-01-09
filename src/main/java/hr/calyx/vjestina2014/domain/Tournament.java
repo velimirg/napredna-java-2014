@@ -1,8 +1,5 @@
 package hr.calyx.vjestina2014.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,6 +9,9 @@ public class Tournament {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+
+    private boolean template;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "tournament")
     private List<Round> rounds;
@@ -40,5 +40,13 @@ public class Tournament {
 
     public void setRounds(List<Round> rounds) {
         this.rounds = rounds;
+    }
+
+    public boolean isTemplate() {
+        return template;
+    }
+
+    public void setTemplate(boolean template) {
+        this.template = template;
     }
 }

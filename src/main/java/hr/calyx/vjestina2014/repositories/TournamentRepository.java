@@ -1,7 +1,6 @@
 package hr.calyx.vjestina2014.repositories;
 
 import hr.calyx.vjestina2014.domain.Tournament;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +12,5 @@ import java.util.List;
 @Repository
 public interface TournamentRepository extends CrudRepository<Tournament, Long> {
 
+    List<Tournament> findByTemplate(boolean b);
 }

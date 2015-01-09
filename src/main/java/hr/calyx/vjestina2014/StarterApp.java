@@ -1,5 +1,6 @@
 package hr.calyx.vjestina2014;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import org.springframework.boot.SpringApplication;
@@ -24,7 +25,9 @@ public class StarterApp {
         ObjectMapper mapper = new ObjectMapper();
         Hibernate4Module hm = new Hibernate4Module();
         hm.configure(Hibernate4Module.Feature.FORCE_LAZY_LOADING, false);
+
         mapper.registerModule(hm);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         messageConverter.setObjectMapper(mapper);
         return messageConverter;
     }

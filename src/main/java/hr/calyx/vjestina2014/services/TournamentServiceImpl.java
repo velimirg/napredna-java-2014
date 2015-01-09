@@ -1,8 +1,6 @@
 package hr.calyx.vjestina2014.services;
 
-import hr.calyx.vjestina2014.domain.Match;
-import hr.calyx.vjestina2014.domain.Round;
-import hr.calyx.vjestina2014.domain.Tournament;
+import hr.calyx.vjestina2014.domain.*;
 import hr.calyx.vjestina2014.repositories.TournamentRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,27 +24,52 @@ public class TournamentServiceImpl implements TournamentService {
     @Autowired
     TournamentRepository tournamentRepository;
 
+    @Autowired
+    PlayerService playerService;
     @Override
     public Tournament getDummyTournament() {
-        Tournament tourney = new Tournament();
-        List<Round> rounds = new ArrayList<Round>();
+        Tournament tournament = new Tournament();
 
-        Round finals = new Round();
-        List<Match> matches = new ArrayList<Match>();
-        matches.add(matchService.getDummyMatch());
-        finals.setMatches(matches);
-        rounds.add(finals);
+        List<Player> players = playerService.list();
 
-        Round semis = new Round();
-        matches = new ArrayList<Match>();
-        for (int i=0; i<2; i++) {
-            matches.add(matchService.getDummyMatch());
+        tournamentRepository.save(tournament);
+
+        tournament.setName("Dummy Tournament" + tournament.getId());
+
+        int roundNum = 4;
+
+        int gameNum = 5;
+
+        tournament.setTemplate(true);
+        tournament.setRounds(new ArrayList<Round>());
+        for (int i = 0; i < roundNum; i++) {
+            Round round = new Round();
+            round.setDescription("Round " + (i + 1));
+            round.setTournament(tournament);
+            round.setMatches(new ArrayList<Match>());
+            for (int j = 0; j <  Math.round(Math.pow(2, roundNum - i - 1)); j++) {
+                Match match = new Match();
+                match.setDescription("Match " + (j + 1));
+                match.setRound(round);
+                match.setGames(new ArrayList<Game>());
+                if (i == 0) {
+                    match.setPlayer1(players.get(j * 2));
+                    match.setPlayer2(players.get(j * 2 + 1));
+                }
+
+                for (int k = 0; k < gameNum; k++) {
+                    Game game = new Game();
+                    game.setMap(Map.values()[k]);
+                    game.setMatch(match);
+                    game.setDate(new Date());
+                    match.getGames().add(game);
+                }
+                round.getMatches().add(match);
+            }
+            tournament.getRounds().add(round);
         }
-        semis.setMatches(matches);
-        rounds.add(semis);
 
-        tourney.setRounds(rounds);
-        return tourney;
+        return tournament;
     }
 
     @Override
@@ -73,5 +97,26 @@ public class TournamentServiceImpl implements TournamentService {
     @Override
     public void delete(Long id) {
         tournamentRepository.delete(id);
+    }
+
+    @Override
+    public List<Tournament> listTemplates() {
+        return tournamentRepository.findByTemplate(true);
+    }
+
+    @Override
+    public Tournament createFull(Tournament tournament) {
+
+        for (Round round : tournament.getRounds()) {
+            round.setTournament(tournament);
+            for (Match match : round.getMatches()) {
+                match.setRound(round);
+                for (Game game : match.getGames()) {
+                    game.setMatch(match);
+                }
+            }
+        };
+
+        return tournamentRepository.save(tournament);
     }
 }

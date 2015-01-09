@@ -3,8 +3,11 @@ var tournamentServices = angular.module('tournamentServices');
 tournamentServices.factory('TournamentFactory', function ($http, $route) {
     var factory = {};
 
-    factory.getTournaments = function () {
-        return $http.get('tournaments');
+    factory.getTournamentTemplates = function () {
+        return $http.get('tournaments-templates');
+    }
+    factory.generateDummyTournament = function() {
+        return $http.post('tournaments-dummy', null);
     }
     return factory;
 })

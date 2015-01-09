@@ -17,4 +17,7 @@ public interface TournamentService {
 
     public void delete(Long id);
 
+    public List<Tournament> listTemplates();
+
+    public Tournament createFull(Tournament tournament);
 }

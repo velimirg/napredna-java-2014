@@ -2,7 +2,6 @@ package hr.calyx.vjestina2014.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,8 +12,11 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "round_id", nullable = false)
+    @JsonIgnore
     private Round round;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "match")
@@ -78,5 +80,13 @@ public class Match {
 
     public void setWinner(Player winner) {
         this.winner = winner;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

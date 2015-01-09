@@ -1,20 +1,56 @@
 <div>
 
-    <form>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary" ng-click="postTournament(tournament)">Save</button>
+        </div>
+    </div>
 
-        <input type="text" ng-model="tournament.name" placeholder="Enter tournament name">
-        <button ng-click="editTournament(tournament)">Save</button>
-    </form>
+    <div class="rounds-container" style="padding: 30px" >
+        <div class="match-container container-fluid" style="padding-right: 30px" ng-repeat="round in tournament.rounds">
 
-    <table>
-        <tr>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-        <tr ng-repeat="round in rounds">
-            <td>{{round.description}}</td>
-            <td></td>
-        </tr>
-    </table>
+            <h1>{{round.description}}</h1>
+            <div style="margin-top: 20px; padding: 20px; border: 1px solid cornflowerblue" ng-repeat="match in round.matches">
+                <h3>{{match.description}}</h3>
+                {{match.player1.nickname}} ({{match.player1.race}}) vs {{match.player2.nickname}} ({{match.player2.race}})
+                <div class="row">
+                    <div class="col-md-4">
+                        Map
+                    </div>
+                    <div class="col-md-4">
+                        Map
+                    </div>
+                    <div class="col-md-4">
+                        Winner
+                    </div>
+                </div>
+                <div class="row" ng-repeat="game in match.games">
+
+                    <div class="col-md-4">
+                        {{game.date | date}}
+                    </div>
+                        <div class="col-md-4">
+                            {{game.map}}
+                        </div>
+                        <div class="col-md-4">
+                            <select ng-model="game.winner" ng-change="changedWinner(game, match, round, tournament)">
+                                <option value="{{match.player1}}">Te1{{match.player1.nickname}}</option>
+                                <option value="{{match.player2}}">Te2{{match.player2.nickname}}</option>
+                            </select>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        Winner: {{match.winner.nickname}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
 
 </div>

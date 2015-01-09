@@ -1,5 +1,7 @@
 package hr.calyx.vjestina2014.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -12,6 +14,7 @@ public class Game {
 
     @ManyToOne
     @JoinColumn(name = "match_id", nullable = false)
+    @JsonIgnore
     private Match match;
 
     @Enumerated(value = EnumType.STRING)
