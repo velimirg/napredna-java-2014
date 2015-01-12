@@ -1,5 +1,7 @@
 package hr.calyx.vjestina2014.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,6 +19,11 @@ public class Tournament {
     private List<Round> rounds;
 
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_template_id")
+    @JsonIgnore
+    private Tournament parentTemplate;
 
     public Long getId() {
         return id;
@@ -48,5 +55,13 @@ public class Tournament {
 
     public void setTemplate(boolean template) {
         this.template = template;
+    }
+
+    public Tournament getParentTemplate() {
+        return parentTemplate;
+    }
+
+    public void setParentTemplate(Tournament parentTemplate) {
+        this.parentTemplate = parentTemplate;
     }
 }

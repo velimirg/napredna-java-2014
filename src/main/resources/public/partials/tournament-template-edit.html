@@ -1,12 +1,22 @@
-<div>
+<div class="container-fluid">
+
 
     <div class="row">
-        <div class="col-md-12">
-            <button class="btn btn-primary" ng-click="postTournament(tournament)">Save</button>
+        <div class="col-md-3">
+
+            <h1>Template</h1>
+            <input class="form-control" type="text" ng-model="tournament.name">
+        </div>
+    </div>
+
+    <div style="padding-top: 20px;" class="row">
+        <div class="col-md-3">
+            <button class="btn btn-block btn-primary" ng-click="postTournament(tournament)">Save</button>
         </div>
     </div>
 
     <div class="rounds-container" style="padding: 30px" >
+
         <div class="match-container container-fluid" style="padding-right: 30px" ng-repeat="round in tournament.rounds">
 
             <h1>{{round.description}}</h1>
@@ -45,11 +55,5 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
-
-
-
 </div>

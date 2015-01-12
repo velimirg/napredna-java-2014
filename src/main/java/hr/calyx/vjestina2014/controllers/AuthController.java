@@ -6,6 +6,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import hr.calyx.vjestina2014.config.SecurityConfig;
+import hr.calyx.vjestina2014.domain.AppRole;
+import hr.calyx.vjestina2014.domain.AppUser;
 import hr.calyx.vjestina2014.security.JWTClaims;
 import hr.calyx.vjestina2014.services.AppUserService;
 import hr.calyx.vjestina2014.services.RSAKeysService;
@@ -25,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.interfaces.RSAPrivateKey;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Tomislav on 12/7/2014.
@@ -53,12 +57,19 @@ public class AuthController {
 
         Person person = google.plusOperations().getGoogleProfile();
 
-        if (appUserService.getByUsername(person.getAccountEmail()) == null) {
-            appUserService.create(person.getAccountEmail(), person.getGivenName(), person.getFamilyName());
+        AppUser user = appUserService.getByUsername(person.getAccountEmail());
+        if (user == null) {
+            user = appUserService.create(person.getAccountEmail(), person.getGivenName(), person.getFamilyName());
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        String tokenContent = mapper.writeValueAsString(new JWTClaims(person.getAccountEmail(), System.currentTimeMillis() + SecurityConfig.TOKEN_EXPIRATION));
+
+        List<String> roles = new ArrayList<String>();
+        for (AppRole role : user.getRoles()) {
+            roles.add(role.getName());
+        }
+
+        String tokenContent = mapper.writeValueAsString(new JWTClaims(user.getUsername(), System.currentTimeMillis() + SecurityConfig.TOKEN_EXPIRATION, roles));
 
         RsaSigner signer = new RsaSigner((RSAPrivateKey) rsaKeysService.getKeys().getPrivate());
 

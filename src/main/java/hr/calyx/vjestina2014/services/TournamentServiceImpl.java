@@ -34,7 +34,7 @@ public class TournamentServiceImpl implements TournamentService {
 
         tournamentRepository.save(tournament);
 
-        tournament.setName("Dummy Tournament" + tournament.getId());
+        tournament.setName("Dummy Tournament Template " + tournament.getId());
 
         int roundNum = 4;
 
@@ -84,6 +84,7 @@ public class TournamentServiceImpl implements TournamentService {
 
     @Override
     public Tournament create(Tournament tournament) {
+
         return tournamentRepository.save(tournament);
     }
 
@@ -118,5 +119,26 @@ public class TournamentServiceImpl implements TournamentService {
         };
 
         return tournamentRepository.save(tournament);
+    }
+
+    @Override
+    public Tournament createFromTemplate(Long templateId, Tournament tournament) {
+        tournament.setParentTemplate(tournamentRepository.findOne(templateId));
+        for (Round round : tournament.getRounds()) {
+            round.setTournament(tournament);
+            for (Match match : round.getMatches()) {
+                match.setRound(round);
+                for (Game game : match.getGames()) {
+                    game.setMatch(match);
+                }
+            }
+        };
+        return tournamentRepository.save(tournament);
+
+    }
+
+    @Override
+    public List<Tournament> listByTemplateId(Long templateId) {
+        return tournamentRepository.findByParentTemplate_Id(templateId);
     }
 }

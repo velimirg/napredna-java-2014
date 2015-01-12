@@ -13,4 +13,7 @@ import java.util.List;
 public interface TournamentRepository extends CrudRepository<Tournament, Long> {
 
     List<Tournament> findByTemplate(boolean b);
+
+    List<Tournament> findByParentTemplate_Id(Long templateId);
+
 }

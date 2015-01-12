@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h3>Templates</h3>
+
+            <button class="btn btn-primary" ng-click="generateDummyTournament()">Generate tournament</button>
+        </div>
+    </div>
+    <div style="padding-top: 20px" class="row">
+        <div class="col-md-12">
+            <div class="list-group-item" ng-repeat="template in templates">
+                <h4 class="list-group-item-heading">{{template.name}}</h4>
+                <a href="#/templates/{{template.id}}">Create prediction</a><br/>
+                <a href ng-click="deleteTemplate(template)">Delete</a><br/>
+                <a href="#/templates/{{template.id}}/tournaments">View predictions</a>
+            </div>
+        </div>
+    </div>
+</div>

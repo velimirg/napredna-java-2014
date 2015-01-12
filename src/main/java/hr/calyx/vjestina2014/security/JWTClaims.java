@@ -1,5 +1,7 @@
 package hr.calyx.vjestina2014.security;
 
+import java.util.List;
+
 /**
  * Created by Tomislav on 12/8/2014.
  */
@@ -9,13 +11,24 @@ public class JWTClaims {
 
     private long exp;
 
+    private List<String> roles;
+
     public JWTClaims() {
 
     }
 
-    public JWTClaims(String email, long exp) {
+    public JWTClaims(String email, long exp, List<String> roles) {
         this.email = email;
         this.exp = exp;
+        this.roles = roles;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
     public String getEmail() {

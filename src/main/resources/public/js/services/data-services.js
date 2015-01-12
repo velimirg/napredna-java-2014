@@ -4,10 +4,13 @@ tournamentServices.factory('TournamentFactory', function ($http, $route) {
     var factory = {};
 
     factory.getTournamentTemplates = function () {
-        return $http.get('tournaments-templates');
+        return $http.get('tournament-templates');
     }
     factory.generateDummyTournament = function() {
         return $http.post('tournaments-dummy', null);
+    }
+    factory.postTournamentFromTemplate = function(templateId, tournament) {
+        return $http.post('tournament-templates/' + templateId + '/tournaments', tournament);
     }
     return factory;
 })

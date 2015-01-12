@@ -1,10 +1,6 @@
 <div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <button class="btn btn-primary" ng-click="postTournament(tournament)">Save</button>
-        </div>
-    </div>
+    <h1>Prediction</h1>
 
     <div class="rounds-container" style="padding: 30px" >
         <div class="match-container container-fluid" style="padding-right: 30px" ng-repeat="round in tournament.rounds">
@@ -29,14 +25,14 @@
                     <div class="col-md-4">
                         {{game.date | date}}
                     </div>
-                        <div class="col-md-4">
-                            {{game.map}}
-                        </div>
-                        <div class="col-md-4">
-                            <select ng-model="game.winner"  ng-options="player as player.nickname for player in [match.player1, match.player2] track by player.id" ng-change="changedWinner(game, match, round, tournament)" >
+                    <div class="col-md-4">
+                        {{game.map}}
+                    </div>
+                    <div class="col-md-4">
+                        <select disabled="true" ng-model="game.winner"  ng-options="player as player.nickname for player in [match.player1, match.player2] track by player.id" ng-change="changedWinner(game, match, round, tournament)" >
 
-                            </select>
-                        </div>
+                        </select>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">

@@ -2,6 +2,9 @@ package hr.calyx.vjestina2014.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hr.calyx.vjestina2014.config.SecurityConfig;
+import hr.calyx.vjestina2014.domain.AppRole;
+import hr.calyx.vjestina2014.domain.AppUser;
+import hr.calyx.vjestina2014.services.AppUserService;
 import hr.calyx.vjestina2014.services.RSAKeysService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,6 +36,8 @@ public class JWTFilter extends GenericFilterBean {
     @Autowired
     RSAKeysService rsaKeysService;
 
+    @Autowired
+    AppUserService appUserService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
@@ -49,8 +54,14 @@ public class JWTFilter extends GenericFilterBean {
                     JWTClaims claims = mapper.readValue(jwt.getClaims(), JWTClaims.class);
 
                     if (claims.getExp() > System.currentTimeMillis()) {
+                        AppUser user = appUserService.getByUsername(claims.getEmail());
+                        String authorities = "";
+                        for (AppRole role : user.getRoles()) {
+                            authorities = authorities + role.getName() + ",";
+                        }
+                        authorities = authorities.substring(0, authorities.length() - 1);
                         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(claims.getEmail(),
-                                null, AuthorityUtils.commaSeparatedStringToAuthorityList("USER"));
+                                null, AuthorityUtils.commaSeparatedStringToAuthorityList(authorities));
 
                         token.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
 

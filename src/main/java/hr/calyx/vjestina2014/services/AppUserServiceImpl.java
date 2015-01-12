@@ -46,10 +46,29 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @PostConstruct
-    private void addRole() {
+    private void init() {
         AppRole appRole = new AppRole();
         appRole.setName("USER");
         appRole.setDescription("Korisnik");
         appRoleRepository.save(appRole);
+
+        AppRole admin = new AppRole();
+        appRole.setName("ADMIN");
+        appRole.setDescription("Administrator");
+        admin.setUsers(new HashSet<AppUser>());
+        appRoleRepository.save(admin);
+
+        AppUser user = new AppUser();
+
+        user.setUsername("tomislav.barisic@calyx.hr");
+        user.setFirstName("Tomislav");
+        user.setLastName("Barisic");
+        Set<AppRole> roles = new HashSet<AppRole>();
+        roles.add(admin);
+        admin.getUsers().add(user);
+        user.setRoles(roles);
+        appUserRepository.save(user);
+
+
     }
 }

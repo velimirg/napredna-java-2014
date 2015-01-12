@@ -76,12 +76,29 @@ public class TournamentController {
     }
 
 
-    @RequestMapping(value = "/tournaments-templates", method = RequestMethod.GET)
+    @RequestMapping(value = "/tournament-templates", method = RequestMethod.GET)
     public ResponseEntity listTournamentTemplates() {
 
         List<Tournament> tournamentList = tournamentService.listTemplates();
 
         return new ResponseEntity(tournamentList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/tournament-templates/{templateId}/tournaments", method = RequestMethod.GET)
+    public ResponseEntity getTournamentsFromTtemplate(@PathVariable Long templateId) {
+
+
+
+
+        return new ResponseEntity(tournamentService.listByTemplateId(templateId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/tournament-templates/{templateId}/tournaments", method = RequestMethod.POST)
+    public ResponseEntity postTournamentFromTemplate(@PathVariable Long templateId, @RequestBody Tournament tournament) {
+
+
+
+        return new ResponseEntity(tournamentService.createFromTemplate(templateId, tournament), HttpStatus.OK);
     }
 
 }

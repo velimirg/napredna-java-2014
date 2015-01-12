@@ -1,9 +1,7 @@
 package hr.calyx.vjestina2014.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Tomislav on 12/8/2014.
@@ -16,6 +14,8 @@ public class AppRole {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "roles")
+    private Set<AppUser> users;
 
     public Long getId() {
         return id;
@@ -25,6 +25,13 @@ public class AppRole {
         this.id = id;
     }
 
+    public Set<AppUser> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<AppUser> users) {
+        this.users = users;
+    }
 
     private String name;
 

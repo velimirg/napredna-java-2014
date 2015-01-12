@@ -20,4 +20,8 @@ public interface TournamentService {
     public List<Tournament> listTemplates();
 
     public Tournament createFull(Tournament tournament);
+
+    Tournament createFromTemplate(Long templateId, Tournament tournament);
+
+    List<Tournament> listByTemplateId(Long templateId);
 }

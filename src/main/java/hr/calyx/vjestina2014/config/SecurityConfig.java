@@ -32,9 +32,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/oauth2/**").permitAll()
-                .antMatchers("/tournaments/**").hasAuthority("USER")
-                .antMatchers("/players/**").hasAuthority("USER")
-                .antMatchers("/**", HttpMethods.GET).permitAll();
+                .antMatchers("/", "/bower_components/**", "/css/*", "/js/**", "/lib/**", "/partials/**", "/index.html").permitAll()
+                .antMatchers("/tournaments-dummy").permitAll()
+                .antMatchers("/tournaments/*", HttpMethods.GET).hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/tournament-templates", HttpMethods.GET).hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/tournament-templates/**/tournaments", HttpMethods.GET).hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/tournament-templates/**/tournaments", HttpMethods.POST).hasAnyAuthority("USER", "ADMIN")
+                .anyRequest().hasAuthority("ADMIN");
 
         http.csrf().disable();
 
